@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>VIP Global Member Ranking</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+
+<body>
+
+
+<h1>
+👑 VIP Global Member Ranking
+</h1>
+
+
+
+<div class="container">
+
+
+{% for member in members %}
+
+
+
+<div class="card rank-{{member.rank}} {{member.level.replace(' ','-').lower()}}">
+
+
+
+{% if member.rank == 1 %}
+
+<div class="crown">
+👑 TOP 1
+</div>
+
+{% elif member.rank == 2 %}
+
+<div class="medal">
+🥈 TOP 2
+</div>
+
+{% elif member.rank == 3 %}
+
+<div class="medal">
+🥉 TOP 3
+</div>
+
+{% endif %}
+
+
+
+
+{% if member.photo %}
+
+<img src="/static/uploads/{{member.photo}}">
+
+{% endif %}
+
+
+
+
+
+<h2>
+
+#{{member.rank}} {{member.name}}
+
+</h2>
+
+
+
+<h3 class="level">
+
+{{member.level}}
+
+</h3>
+
+
+
+<p>
+
+<b>ID:</b> {{member.member_id}}
+
+</p>
+
+
+
+<p>
+
+<b>Code:</b> {{member.code}}
+
+</p>
+
+
+
+<p>
+
+<b>Income Total:</b> {{member.income}}
+
+</p>
+
+
+
+<p>
+
+<b>Withdrawal:</b> {{member.withdrawal}}
+
+</p>
+
+
+
+<p>
+
+<b>Completed Tasks:</b> {{member.tasks}}
+
+</p>
+
+
+
+<p>
+
+<b>Status:</b>
+
+<span class="status">
+
+{{member.status}}
+
+</span>
+
+</p>
+
+
+
+
+</div>
+
+
+
+{% endfor %}
+
+
+
+</div>
+
+
+</body>
+
+</html>

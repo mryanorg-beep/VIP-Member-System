@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>VIP Admin Dashboard</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+
+<body>
+
+
+<h1>
+⚙️ VIP Admin Dashboard
+</h1>
+
+
+
+<div class="container">
+
+
+
+<div class="card">
+<br>
+
+<h2>
+📈 Ranking Sort
+</h2>
+
+
+<form method="GET" action="/admin">
+
+
+<input 
+type="hidden"
+name="search"
+value="{{request.args.get('search','')}}">
+
+
+<input 
+type="hidden"
+name="level"
+value="{{request.args.get('level','')}}">
+
+
+
+<select name="sort">
+
+
+<option value="">
+Default Rank
+</option>
+
+
+<option value="income">
+Highest Income
+</option>
+
+
+<option value="withdrawal">
+Highest Withdrawal
+</option>
+
+
+<option value="tasks">
+Highest Tasks
+</option>
+
+
+</select>
+
+
+
+<button type="submit">
+
+Sort
+
+</button>
+
+
+</form>
+
+
+<h2>
+🔍 Search VIP Member
+</h2>
+
+
+<form method="GET" action="/admin">
+
+
+<input 
+type="text"
+name="search"
+placeholder="Search Name / ID / Code">
+
+
+<button type="submit">
+
+Search
+
+</button>
+
+
+</form>
+
+<br>
+
+
+<form method="GET" action="/admin">
+
+
+<select name="level">
+
+
+<option value="">
+All VIP Levels
+</option>
+
+
+<option value="Ruby Global Member">
+Ruby Global Member
+</option>
+
+
+<option value="Gold Member">
+Gold Member
+</option>
+
+
+<option value="Diamond Member">
+Diamond Member
+</option>
+
+
+<option value="VVIP Member">
+VVIP Member
+</option>
+
+
+</select>
+
+
+
+<button type="submit">
+
+Filter
+
+</button>
+
+
+</form>
+
+<br>
+
+
+<a href="/admin">
+
+<button>
+
+Show All
+
+</button>
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📊 Total Members
+</h2>
+
+
+<h1>
+{{members|length}}
+</h1>
+<br>
+
+<a href="/export">
+
+<button>
+
+📥 Export Excel
+
+</button>
+
+</a>
+
+
+<a href="/logout">
+
+<button>
+
+Logout
+
+</button>
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+➕ Add New VIP Member
+</h2>
+
+
+
+<form action="/add" method="POST" enctype="multipart/form-data">
+
+
+<input name="rank" placeholder="Rank" required><br><br>
+
+<input name="name" placeholder="Member Name" required><br><br>
+
+<input name="member_id" placeholder="Member ID" required><br><br>
+
+<input name="code" placeholder="VIP Code" required><br><br>
+
+<input name="level" placeholder="VIP Level" required><br><br>
+
+<input name="income" placeholder="Income"><br><br>
+
+<input name="withdrawal" placeholder="Withdrawal"><br><br>
+
+<input name="payment" placeholder="Payment"><br><br>
+
+<input name="tasks" placeholder="Tasks"><br><br>
+
+<input name="status" placeholder="Status"><br><br>
+
+<input type="file" name="photo"><br><br>
+
+
+<button>
+
+Add Member
+
+</button>
+
+
+</form>
+
+
+</div>
+
+
+
+
+
+
+
+{% for member in members %}
+
+
+
+<div class="card {{member.level.replace(' ','-').lower()}}">
+
+
+
+{% if member.photo %}
+
+<img src="/static/uploads/{{member.photo}}" width="120">
+
+{% endif %}
+
+
+
+<h2>
+
+#{{member.rank}} {{member.name}}
+
+</h2>
+
+
+<p>
+ID: {{member.member_id}}
+</p>
+
+
+<p>
+Code: {{member.code}}
+</p>
+
+
+<p>
+Level: {{member.level}}
+</p>
+
+
+<p>
+Income: {{member.income}}
+</p>
+
+
+<p>
+Status: {{member.status}}
+</p>
+
+
+
+
+
+<form action="/edit/{{member.id}}" method="POST">
+
+
+<input name="name" value="{{member.name}}">
+
+<br><br>
+
+
+<input name="member_id" value="{{member.member_id}}">
+
+<br><br>
+
+
+<input name="code" value="{{member.code}}">
+
+<br><br>
+
+
+<input name="level" value="{{member.level}}">
+
+<br><br>
+
+
+<input name="income" value="{{member.income}}">
+
+<br><br>
+
+
+<input name="withdrawal" value="{{member.withdrawal}}">
+
+<br><br>
+
+
+<input name="payment" value="{{member.payment}}">
+
+<br><br>
+
+
+<input name="tasks" value="{{member.tasks}}">
+
+<br><br>
+
+
+<input name="status" value="{{member.status}}">
+
+
+<br><br>
+
+
+<button>
+
+Save Changes
+
+</button>
+
+
+</form>
+
+
+
+
+<br>
+
+
+<a href="/delete/{{member.id}}">
+
+<button>
+
+Delete
+
+</button>
+
+</a>
+
+
+
+</div>
+
+
+
+{% endfor %}
+
+
+
+</div>
+
+
+
+</body>
+
+</html>
