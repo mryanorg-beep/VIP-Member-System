@@ -3,11 +3,14 @@ import sqlite3
 import os
 import io
 import csv
+import database
+import database
 from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
-
+database.create_database()
+database.create_database()
 app.secret_key = "vip-secret-key"
 
 UPLOAD_FOLDER = "static/uploads"
